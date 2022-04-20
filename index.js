@@ -1,5 +1,5 @@
 
-const http = require('http'); // import http from 'http' (importamos la libreria http)
+const http = require('http');
 
 const users = [
     { id: 1, name: 'Joe' },
@@ -13,22 +13,37 @@ const posts = [
     { id: 3, title: 'post3' }
 ];
 
-const server = http.createServer((req, res) => { // Me crea el servidor (request, response)
-    const url = req.url; // /user
+const server = http.createServer((req, res) => {
+    const url = req.url;
+    const method = req.method;
 
-    if (url === '/users') {
+    if (method === 'GET' && url === '/users') {
         // Return users List
         res.write(JSON.stringify({ users }));
-    } else if (url === '/posts') {
+    } else if (method === 'GET' && url === '/posts') {
         res.write(JSON.stringify({ posts }));
+    } else if (method === 'POST' && url === '/users') {
+        const userData = [];
+        req.on('data', (chunk) => {
+            userData.push(chunk);
+        });
+        req.on('end', () => {
+            const parseData = Buffer.concat(userData).toString();
+            const name = parseData.split('=')[1];
+            
+            const newUser = {
+                id: Math.floor(Math.random()* 1000),
+                name,
+            };
+
+            users.push(newUser);
+        });
     } else {
         res.write(`${url} is not a valid endpoint`); 
     }
 
     res.end();
-}); // como parámetros petición y respuesta
+});
 
 const PORT = 3000;
-
-// http://localhost:PORT
-server.listen(PORT); // Pone a escuchar al servidor (abre el event-loop)
+server.listen(PORT);
