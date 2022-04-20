@@ -1,5 +1,6 @@
 
 const http = require('http');
+const { parse } = require('node:path/win32');
 
 const users = [
     { id: 1, name: 'Joe' },
@@ -20,8 +21,10 @@ const server = http.createServer((req, res) => {
     if (method === 'GET' && url === '/users') {
         // Return users List
         res.write(JSON.stringify({ users }));
+
     } else if (method === 'GET' && url === '/posts') {
         res.write(JSON.stringify({ posts }));
+
     } else if (method === 'POST' && url === '/users') {
         const userData = [];
         req.on('data', (chunk) => {
@@ -33,11 +36,29 @@ const server = http.createServer((req, res) => {
             
             const newUser = {
                 id: Math.floor(Math.random()* 1000),
-                name,
+                name
             };
 
             users.push(newUser);
         });
+
+    } else if (method === 'POST' && url === '/posts') {
+        const postData = [];
+        req.on('data', (chunk) => {
+            postData.push(chunk);
+        });
+        req.on('end', () => {
+            const parseData = Buffer.concat(postData).toString();
+            const title = parseData.split('=')[1]
+
+            const newPost = {
+                id: Math.floor(Math.random()*1000),
+                title
+            }
+
+            posts.push(newPost);
+        });
+
     } else {
         res.write(`${url} is not a valid endpoint`); 
     }
