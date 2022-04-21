@@ -15,18 +15,27 @@ const posts = [
     {id: 3, title: 'Post 3'}
 ]
 
+// Enable incoming JSON data
+app.use(express.json());
+
 //Endpoint
 app.get('/users', (req, res) => {
-    res.status(200).json({
-        users
-    });
+    res.status(200).json({ users });
 });
 
 app.get('/posts', (req, res) => {
-    res.status(200).json({
-        posts
-    })
-})
+    res.status(200).json({ posts });
+});
+
+app.post('/users', (req, res) => {
+    const { name } = req.body;
+    const newUser = {
+        id: Math.floor(Math.random() * 1000),
+        name
+    }
+    users.push(newUser);
+    res.status(201).json({ newUser });
+});
 
 const PORT = 3000;
 
