@@ -22,6 +22,12 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('/posts', (req, res) => {
+    res.status(200).json({
+        posts
+    })
+})
+
 const PORT = 3000;
 
 app.listen(PORT,() => {
