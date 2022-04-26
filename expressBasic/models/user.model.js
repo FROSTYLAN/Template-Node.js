@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const { db } = require('../utils/database')
 
-const Users = db.define('user', {
+const User = db.define('user', {
     id: {
         primaryKey: true,
         autoIncrement: true,
@@ -17,6 +17,10 @@ const Users = db.define('user', {
         unique: true,
         allowNull: false,
     },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+    }
 })
 
-module.exports = { Users }
+module.exports = { User };

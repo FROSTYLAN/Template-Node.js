@@ -6,7 +6,8 @@ const db = new Sequelize({
     username: 'postgres',
     password: 'aniviagod',
     database: 'expressBasic',
-    port: 5432
+    port: 5432,
+    logging: false,
 });
 
 module.exports = { db };
