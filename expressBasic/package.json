@@ -4,17 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "install:client": "npm install --prefix client",
+    "install:server": "npm install --prefix server",
+    "install:app": "npm-run-all install:server install:client",
+    "start:client": "npm start --prefix client",
+    "start:server": "npm start --prefix server",
+    "start:app": "npm-run-all --parallel start:server start:client"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.3",
-    "pg": "^8.7.3",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.19.0"
-  },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "npm-run-all": "^4.1.5"
   }
 }
