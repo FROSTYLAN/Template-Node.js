@@ -1,4 +1,10 @@
 const { app } = require('./app');
+
+//Models
+const { Post } = require('./models/post.model');
+const { User } = require('./models/user.model');
+
+// Utils
 const { db } = require('./utils/database');
 
 db.authenticate()
@@ -6,6 +12,13 @@ db.authenticate()
     console.log('Database authenticated');
   })
   .catch(err => console.log(err));
+
+// Establish models relations
+
+// 1 User <----> M Post
+// User.hasMany(Post, { foreignKey: 'userId' });
+User.hasMany(Post);
+Post.belongsTo(User);
 
 db.sync()
   .then(() => {

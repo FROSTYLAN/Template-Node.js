@@ -11,25 +11,25 @@ import PostItem from '../post-item/post-item.component';
 import classes from './post-list.module.css';
 
 const PostsList = () => {
-	const posts = useSelector(state => state.posts.posts);
-	const dispatch = useDispatch();
+  const posts = useSelector(state => state.posts.posts);
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getPosts());
-	}, [dispatch]);
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
 
-	return (
-		<div className={classes['post-list-container']}>
-			<Row gutter={{ lg: 100 }} justify='space-around'>
-				{posts &&
-					posts.map(post => (
-						<Col key={post.id} span={24}>
-							<PostItem post={post} />
-						</Col>
-					))}
-			</Row>
-		</div>
-	);
+  return (
+    <div className={classes['post-list-container']}>
+      <Row gutter={{ lg: 100 }} justify="space-around">
+        {posts &&
+          posts.map(post => (
+            <Col key={post.id} span={24}>
+              <PostItem post={post} />
+            </Col>
+          ))}
+      </Row>
+    </div>
+  );
 };
 
 export default PostsList;

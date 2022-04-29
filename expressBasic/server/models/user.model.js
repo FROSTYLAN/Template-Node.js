@@ -17,6 +17,11 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
   },
+  password: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
   status: {
     type: DataTypes.STRING,
     defaultValue: 'active',

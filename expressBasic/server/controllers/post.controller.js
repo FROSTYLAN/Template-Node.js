@@ -1,14 +1,17 @@
 const { Post } = require('../models/post.model');
+const { User } = require('../models/user.model');
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.findAll();
+  const posts = await Post.findAll({
+    include: [{ model: User }],
+  });
 
   res.status(200).json({ posts });
 };
 
 const createPosts = async (req, res) => {
-  const { title, content } = req.body;
-  const newPost = await Post.create({ title, content });
+  const { title, content, userId } = req.body;
+  const newPost = await Post.create({ title, content, userId });
 
   res.status(201).json({ newPost });
 };
