@@ -15,73 +15,73 @@ import UpdatePostForm from '../../forms/update-post-form/update-post-form.compon
 import classes from './post-item.module.css';
 
 const PostItem = ({ post }) => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	// State
-	const [showEditForm, setShowEditForm] = useState(false);
+  // State
+  const [showEditForm, setShowEditForm] = useState(false);
 
-	const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: '2-digit',
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: true,
-	});
+  const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
 
-	const onEditHandler = () => {
-		setShowEditForm(true);
-	};
+  const onEditHandler = () => {
+    setShowEditForm(true);
+  };
 
-	const onDeleteHandler = () => {
-		dispatch(deletePost(post.id));
-	};
+  const onDeleteHandler = () => {
+    dispatch(deletePost(post.id));
+  };
 
-	return (
-		<Card
-			actions={
-				post.user.id === 1 && [
-					<EditOutlined onClick={onEditHandler} key='edit' />,
-					<DeleteOutlined
-						onClick={onDeleteHandler}
-						style={{ color: '#f85555' }}
-						key='delete'
-					/>,
-				]
-			}
-			headStyle={{
-				background: '#97dddf',
-				color: '#114070',
-				fontWeight: 'bold',
-			}}
-			title={post.user.name}
-			extra={formattedDate}
-			hoverable
-			className={classes.card}
-		>
-			{!showEditForm ? (
-				<Row>
-					<Col span={20}>
-						<Card.Meta title={post.title} />
-						<p>{post.content}</p>
-					</Col>
-					<Col span={4}>
-						<Link to={`/profile/${post.user.id}`}>View profile</Link>
-					</Col>
-				</Row>
-			) : (
-				<UpdatePostForm
-					id={post.id}
-					title={post.title}
-					content={post.content}
-					onHideUpdateForm={() => setShowEditForm(false)}
-				/>
-			)}
+  return (
+    <Card
+      actions={
+        post.userId === 1 && [
+          <EditOutlined onClick={onEditHandler} key="edit" />,
+          <DeleteOutlined
+            onClick={onDeleteHandler}
+            style={{ color: '#f85555' }}
+            key="delete"
+          />,
+        ]
+      }
+      headStyle={{
+        background: '#97dddf',
+        color: '#114070',
+        fontWeight: 'bold',
+      }}
+      // title={post.user.name}
+      extra={formattedDate}
+      hoverable
+      className={classes.card}
+    >
+      {!showEditForm ? (
+        <Row>
+          <Col span={20}>
+            <Card.Meta title={post.title} />
+            <p>{post.content}</p>
+          </Col>
+          <Col span={4}>
+            <Link to={`/profile/${post.userId}`}>View profile</Link>
+          </Col>
+        </Row>
+      ) : (
+        <UpdatePostForm
+          id={post.id}
+          title={post.title}
+          content={post.content}
+          onHideUpdateForm={() => setShowEditForm(false)}
+        />
+      )}
 
-			<PostImgCarousel />
+      <PostImgCarousel />
 
-			{/* We'll implement comments later on the module */}
-			{/* <Collapse ghost>
+      {/* We'll implement comments later on the module */}
+      {/* <Collapse ghost>
 				<Collapse.Panel
 					header={`View ${post.comments.length} comments`}
 					key='1'
@@ -89,8 +89,8 @@ const PostItem = ({ post }) => {
 					<PostComments postId={post.id} comments={post.comments} />
 				</Collapse.Panel>
 			</Collapse> */}
-		</Card>
-	);
+    </Card>
+  );
 };
 
 export default PostItem;
